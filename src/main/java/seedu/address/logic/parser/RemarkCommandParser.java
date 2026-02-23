@@ -21,7 +21,7 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
      */
     public RemarkCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_REMARK); 
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_REMARK);
         //The tokenize function looks out for our new prefix "r/" and returns us an instance of ArgumentMultimap
 
         Index index;

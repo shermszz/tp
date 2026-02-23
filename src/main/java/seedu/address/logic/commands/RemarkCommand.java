@@ -13,7 +13,7 @@ import seedu.address.model.person.Remark;
  * Changes the remark of an existing person in the address book.
  */
 public class RemarkCommand extends Command {
-    
+
     public static final String COMMAND_WORD = "remark";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the remark of the person identified "
             + "by the index number used in the last person listing. "
@@ -26,7 +26,7 @@ public class RemarkCommand extends Command {
     public static final String MESSAGE_NOT_IMPLEMENTED_YET = "Remark command not implemented yet";
 
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Remark: %2$s";
-    
+
     private final Index index;
     private final Remark remark;
 
@@ -59,5 +59,4 @@ public class RemarkCommand extends Command {
         RemarkCommand e = (RemarkCommand) other;
         return index.equals(e.index) && remark.equals(e.remark);
     }
-
 }
