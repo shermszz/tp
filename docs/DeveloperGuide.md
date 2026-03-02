@@ -300,40 +300,43 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `InternTrack` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+**Use case: UC07 - Archive an application cycle (representative non-MVP, multi-step)**
+
+**Preconditions:** At least one record exists in the current cycle.
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1. User requests to archive the current cycle.
+2. System archives the current cycle and starts a new empty cycle.
+3. System confirms that the new cycle is active and the archived cycle remains accessible.
 
-    Use case ends.
+   Use case ends.
 
 **Extensions**
 
-* 2a. The list is empty.
+* 1a. No record exists.
+    * 1a1. System informs the user there is nothing to archive.
 
-  Use case ends.
+      Use case ends.
 
-* 3a. The given index is invalid.
+* 2a. Archive fails due to storage write failure.
+    * 2a1. System informs the user the archive operation failed.
 
-    * 3a1. AddressBook shows an error message.
-
-      Use case resumes at step 2.
-
-*{More to be added}*
+      Use case ends.
 
 ### Non-Functional Requirements
 
-1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-*{More to be added}*
+1. **Platform compatibility:** The app must run on Windows 10/11, macOS, and Ubuntu Linux with Java 17 installed.
+2. **Distribution:** The app must be distributable as a single executable JAR without an installer.
+3. **Offline-first:** All core functions must work fully offline and must not require any remote server or external API.
+4. **Local storage format:** Data must be stored locally in a human-editable text file (e.g., JSON) and must not use a DBMS.
+5. **Response time:** With up to 500 opportunity records, typical commands (add, delete, list, find, update) must complete within 500 ms, excluding application startup.
+6. **Startup time:** With up to 500 records, the application should be usable within 2 seconds after launch on a typical modern laptop.
+7. **Autosave reliability:** The app must automatically save after every state-changing operation (e.g., add, remove, update).
+8. **Graceful storage failure:** If reading or writing the storage file fails, the app must not crash and must show a clear error message.
+9. **CLI-first usability:** All core functions must be operable using keyboard-only input; the GUI is for visualization and must not be required to complete core tasks.
 
 ### Glossary
 
