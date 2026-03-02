@@ -293,7 +293,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                 | So that I can…​                                                        |
+| Priority | As a …​                                    | I want to …​                 | So that I …​             |
 |----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
 | `* * *`  | undergraduate applicant | add a new opportunity record | can track it instead of relying on memory |
 | `* * *`  | busy applicant juggling many applications | list all opportunities I’m tracking | can see my workload at a glance |
@@ -310,12 +310,137 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* *`  |undergraduate applicant|store recruiter/contact details for an opportunity|can follow up without searching through chats|
 | `* *`  |undergraduate applicant|mark an opportunity with a completed outcome|can close loops and reduce mental load|
 | `* *`  |busy applicant juggling many applications|view only opportunities in a chosen status|can batch-handle similar tasks|                                              |
+| `*` |  undergraduate applicant | tag / classify opportunities          |  can separate different application types quickly |
+| `*` |  undergraduate applicant | store a short note for an opportunity |  can remember context like referrals or required documents |
+| `*` |  undergraduate applicant | record milestone dates  |  can reconstruct my timeline when needed |
+| `*` |  busy applicant juggling many applications  |  see which deadlines are within the next N days | can plan my week |
+| `*` |  busy applicant juggling many applications  |  flag an opportunity as high priority  |  stands out among many entries |
+| `*` |  busy applicant juggling many applications  |  be warned about potential duplicates  |  don’t track the same application twice  |
+| `*` |  busy applicant juggling many applications  |  merge duplicate records  |  ensure my history stays consistent  |
+| `*` |  frequent user  |  maintain consistent status labels  |  ensure my filtering and reviewing reamins reliable over time  |
+| `*` |  busy applicant juggling many applications  |  extract key contact info from selected opportunities  |  can paste it into my email client quickly  |
+| `*` |  busy applicant juggling many applications  |  see summary counts by status |  can gauge progress at a glance  |
+| `*` |  end-of-cycle user  |  review outcomes for a cycle  |  can improve my strategy next time  |
+| `*` |  end-of-cycle user  |  record reasons for rejection / withdrawal  |  can learn patterns over time  |
+| `*` |  busy applicant juggling many applications  |  recover from accidental destructive actions  |  do not wipe a whole cycle when I make one mistake  |
+| `*` |  frequent user  |  keep my data in a human-editable local file  |  can make bulk edits when needed  |
+| `*` |  frequent user  |  make bulk-update statuses |  can process large batches efficiently  |
+| `*` |  end-of-cycle user  |  archive an old cycle  |  can keep my current list concise without losing history  |
+| `*` |  end-of-cycle user  |  start a new cycle while keeping past cycles accessible  |  can compare outcomes year to year  |
+| `*` |  frequent user  |  search within notes  |  can quickly retrieve context like "referral" or "via required"  |
+| `*` |  frequent user  |  view opportunities grouped by category / tag  |  focus on one track at a time  |
+| `*` |  frequent user  |  mark opportunities that require follow-up  |  don't forget to chase responses  |
 
 *{More to be added}*
 
 ### Use cases
 
 (For all use cases below, the **System** is the `InternTrack` and the **Actor** is the `user`, unless specified otherwise)
+
+**Use case: UC01 - Add an opportunity record**
+
+**MSS**
+
+1. User requests to add a new opportunity record.
+2. System validates the provided details.
+3. System creates the new opportunity record.
+4. System reflects the newly added record.
+
+   Use case ends.
+
+**Extensions**
+* 2a. Required details are missing (Company or Role).
+    * 2a1. System shows an error message indicating missing required details.
+
+        Use case resumes from step 1.
+
+* 2b. Provided deadline format is invalid
+    * 2b1. System shows an error message indicating the accepted deadline format.
+
+        Use case resumes from step 1.
+
+* 2c. Duplicate detected (same Company and Role already exists).
+    * 2c1. System informs the user that a duplicate exists.
+
+        Use case ends.
+
+
+**Use case: UC04 — Update status/stage of an opportunity**
+
+Preconditions: At least one record exists.
+
+**MSS**
+
+1.  User requests to <u>list opportunity records (UC3).<u/>
+2.  System shows the list of opportunity records.
+3.  User requests to update the status/stage of a specified record.
+4.  System validates the new status value.
+5.  System updates the record.
+6.  System reflects the update.
+
+    Use case ends.
+
+**Extensions**
+
+* 4a. Index is invalid.
+  * 4a1. System shows an error message.
+
+    Use case resumes from step 3.
+
+* 4b. Status value is invalid.
+  * 4b1. System shows an error message listing accepted status values.
+
+    Use case resumes from step 3.
+
+
+**Use case: UC05 — Record or update a deadline**
+
+Preconditions: At least one record exists.
+
+**MSS**
+
+1.  User requests to <u>list opportunity records (UC3).<u/>
+2.  System shows the list of opportunity records.
+3.  User requests to set or update the deadline for a specified record
+4.  System validates the deadline value.
+5.  System updates the record
+6.  System reflects the update.
+
+    Use case ends.
+
+**Extensions**
+
+* 4a. Index is invalid.
+    * 4a1. System shows an error message.
+
+      Use case resumes from step 3.
+
+* 4b. Deadline format is invalid.
+    * 4b1. System shows an error message indicating the accepted format.
+
+      Use case resumes from step 3.
+
+* 4c. Deadline is in the past.
+    * 4c1. System shows a warning.
+
+      Use case resumes from step 5.
+
+
+**Use case: UC06 — Search for opportunities by keyword**
+
+**MSS**
+
+1.  User requests to search opportunity records matching a keyword.
+2.  System shows all records that match the keyword.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. No matches found.
+    * 2a1. System informs the user there are no matching records.
+
+      Use case ends.
 
 **Use case: UC07 - Archive an application cycle (representative non-MVP, multi-step)**
 
@@ -329,9 +454,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
    Use case ends.
 
+
 **Extensions**
 
-* 1a. No record exists.
+* 1a. No records exist.
     * 1a1. System informs the user there is nothing to archive.
 
       Use case ends.
