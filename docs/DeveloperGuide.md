@@ -337,7 +337,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `InternTrack` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: UC01 - Add an opportunity record**
+**Use case: UC01 — Add an opportunity record**
 
 **MSS**
 
@@ -363,6 +363,48 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 2c1. System informs the user that a duplicate exists.
 
         Use case ends.
+
+
+**Use case: UC02 — Remove an opportunity record**
+
+**MSS**
+
+1.  User requests to <u>list opportunity records (UC3).</u>
+2.  System shows the list of stored opportunity records.
+3.  User requests to remove a specific record in the list.
+4.  System removes the record.
+5.  System reflects the removal.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. No records exist.
+    * 1a1. System informs the user there are no records to remove.
+
+      Use case ends.
+
+* 3a. Index does not refer to an existing record.
+    * 3a1. System shows an error message.
+
+      Use case resumes from step 3.
+
+
+**Use case: UC03 — List all opportunity records**
+
+**MSS**
+
+1.  User requests to list all opportunity records.
+2.  System shows the list of stored opportunity records.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. No records exist.
+    * 1a1. System informs the user that the list is empty.
+
+      Use case ends.
 
 
 **Use case: UC04 — Update status/stage of an opportunity**
@@ -442,7 +484,7 @@ Preconditions: At least one record exists.
 
       Use case ends.
 
-**Use case: UC07 - Archive an application cycle (representative non-MVP, multi-step)**
+**Use case: UC07 — Archive an application cycle (representative non-MVP, multi-step)**
 
 **Preconditions:** At least one record exists in the current cycle.
 
@@ -482,7 +524,20 @@ Preconditions: At least one record exists.
 ### Glossary
 
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
+* **CLI**: Command Line Interface; users interact primarily by typing commands.
+* **Opportunity record (Record)**: A single entry representing one internship application being tracked.
+* **Company**: The organisation that offers the opportunity.
+* **Role**: The position/title applied for.
+* **Status / Stage**: The current progress state of an application (e.g., SAVED, APPLIED, OA, INTERVIEW, OFFER, REJECTED, WITHDRAWN).
+* **Deadline**: The date/time by which a submission or action is due for an opportunity record.
+* **Outcome**: A terminal result of an application (e.g., OFFER, REJECTED, WITHDRAWN).
+* **Keyword**: A text fragment used to search/filter records.
+* **Duplicate opportunity**: Two records that refer to the same opportunity under the project’s duplicate rule (e.g., same Company and Role).
+* **Index**: A temporary 1-based position number shown in a displayed list.
+* **MSS**: Main Success Scenario; the most straightforward interaction for a given use case, which assumes that nothing goes wrong.
+* **Persistence**: The ability to save and load data across sessions from local storage.
+* **Prefix**: A short label used to indicate a field in typed input (e.g., c/, r/).
+* **Cycle**: A time-bounded application period (e.g., one internship season) that can later be archived and reset.
 
 --------------------------------------------------------------------------------------------------------------------
 
