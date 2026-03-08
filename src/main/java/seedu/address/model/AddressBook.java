@@ -6,16 +6,16 @@ import java.util.List;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.opportunity.Opportunity;
+import seedu.address.model.opportunity.UniqueOpportunityList;
 
 /**
  * Wraps all data at the address-book level
- * Duplicates are not allowed (by .isSamePerson comparison)
+ * Duplicates are not allowed (by .isSameOpportunity comparison)
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
-    private final UniquePersonList persons;
+    private final UniqueOpportunityList opportunities;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -25,13 +25,13 @@ public class AddressBook implements ReadOnlyAddressBook {
      *   among constructors.
      */
     {
-        persons = new UniquePersonList();
+        opportunities = new UniqueOpportunityList();
     }
 
     public AddressBook() {}
 
     /**
-     * Creates an AddressBook using the Persons in the {@code toBeCopied}
+     * Creates an AddressBook using the Opportunities in the {@code toBeCopied}
      */
     public AddressBook(ReadOnlyAddressBook toBeCopied) {
         this();
@@ -41,11 +41,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     //// list overwrite operations
 
     /**
-     * Replaces the contents of the person list with {@code persons}.
-     * {@code persons} must not contain duplicate persons.
+     * Replaces the contents of the opportunity list with {@code opportunities}.
+     * {@code opportunities} must not contain duplicate opportunities.
      */
-    public void setPersons(List<Person> persons) {
-        this.persons.setPersons(persons);
+    public void setOpportunities(List<Opportunity> opportunities) {
+        this.opportunities.setOpportunities(opportunities);
     }
 
     /**
@@ -54,44 +54,45 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
 
-        setPersons(newData.getPersonList());
+        setOpportunities(newData.getOpportunityList());
     }
 
-    //// person-level operations
+    //// opportunity-level operations
 
     /**
-     * Returns true if a person with the same identity as {@code person} exists in the address book.
+     * Returns true if a opportunity with the same identity as {@code opportunity} exists in the address book.
      */
-    public boolean hasPerson(Person person) {
-        requireNonNull(person);
-        return persons.contains(person);
+    public boolean hasOpportunity(Opportunity opportunity) {
+        requireNonNull(opportunity);
+        return opportunities.contains(opportunity);
     }
 
     /**
-     * Adds a person to the address book.
-     * The person must not already exist in the address book.
+     * Adds a opportunity to the address book.
+     * The opportunity must not already exist in the address book.
      */
-    public void addPerson(Person p) {
-        persons.add(p);
+    public void addOpportunity(Opportunity p) {
+        opportunities.add(p);
     }
 
     /**
-     * Replaces the given person {@code target} in the list with {@code editedPerson}.
+     * Replaces the given opportunity {@code target} in the list with {@code editedOpportunity}.
      * {@code target} must exist in the address book.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
+     * The opportunity identity of {@code editedOpportunity} must not be the same as another existing opportunity
+     * in the address book.
      */
-    public void setPerson(Person target, Person editedPerson) {
-        requireNonNull(editedPerson);
+    public void setOpportunity(Opportunity target, Opportunity editedOpportunity) {
+        requireNonNull(editedOpportunity);
 
-        persons.setPerson(target, editedPerson);
+        opportunities.setOpportunity(target, editedOpportunity);
     }
 
     /**
      * Removes {@code key} from this {@code AddressBook}.
      * {@code key} must exist in the address book.
      */
-    public void removePerson(Person key) {
-        persons.remove(key);
+    public void removeOpportunity(Opportunity key) {
+        opportunities.remove(key);
     }
 
     //// util methods
@@ -99,13 +100,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("persons", persons)
+                .add("opportunities", opportunities)
                 .toString();
     }
 
     @Override
-    public ObservableList<Person> getPersonList() {
-        return persons.asUnmodifiableObservableList();
+    public ObservableList<Opportunity> getOpportunityList() {
+        return opportunities.asUnmodifiableObservableList();
     }
 
     @Override
@@ -120,11 +121,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
 
         AddressBook otherAddressBook = (AddressBook) other;
-        return persons.equals(otherAddressBook.persons);
+        return opportunities.equals(otherAddressBook.opportunities);
     }
 
     @Override
     public int hashCode() {
-        return persons.hashCode();
+        return opportunities.hashCode();
     }
 }
