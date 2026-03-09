@@ -11,8 +11,9 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.tag.Tag;
 
 /**
- * Represents a Opportunity in the address book.
- * Guarantees: details are present and not null, field values are validated, immutable.
+ * Represents an Opportunity in the address book.
+ * Guarantees: required fields are present and not null, optional fields may be null,
+ * field values are validated by their respective classes, immutable.
  */
 public class Opportunity {
 
@@ -25,6 +26,10 @@ public class Opportunity {
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
 
+    // Required fields
+    private final Company company;
+    private final Role role;
+
     /**
      * Every field must be present and not null.
      */
@@ -35,6 +40,8 @@ public class Opportunity {
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
+        this.company = new Company("Test Company");
+        this.role = new Role("Test Role");
     }
 
     public Name getName() {
@@ -59,6 +66,14 @@ public class Opportunity {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags);
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public Role getRole() {
+        return role;
     }
 
     /**
